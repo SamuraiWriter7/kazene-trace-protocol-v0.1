@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use or reference this specification, please cite it as below."
+title: "Kazene Trace Protocol v0.1"
+version: "0.1.0"
+date-released: 2026-05-17
+type: software
+authors:
+  - name: "Shidenkai Alpha"
+repository-code: "https://github.com/SamuraiWriter7/kazene-trace-protocol-v0.1"
+url: "https://github.com/SamuraiWriter7/kazene-trace-protocol-v0.1"
+abstract: "An open evidence protocol for recording structural fingerprints, trace records, and provenance signals for AI-era creative works."
+license: "MIT"
+keywords:
+  - trace-protocol
+  - structure-fingerprint
+  - provenance
+  - ai-attribution
+  - ai-governance
+  - royalty-os
+  - kazene
+  - content-attribution
+  - digital-provenance
