@@ -1,0 +1,93 @@
+name: Validate Trace Protocol Specs
+
+on:
+  push:
+    paths:
+      - "schemas/**"
+      - "examples/**"
+      - ".github/workflows/validate-specs.yml"
+  pull_request:
+    paths:
+      - "schemas/**"
+      - "examples/**"
+      - ".github/workflows/validate-specs.yml"
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Validate JSON Schemas and Examples
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install jsonschema
+
+      - name: Debug file tree
+        run: |
+          echo "=== Repository file tree ==="
+          find . -maxdepth 4 -type f | sort
+
+      - name: Validate Trace Record sample
+        run: |
+          python - <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          from jsonschema import Draft202012Validator, FormatChecker
+
+          schema_path = Path("schemas/trace-record-v0.1.schema.json")
+          sample_path = Path("examples/trace-record.sample.json")
+
+          print("=== Validating Kazene Trace Protocol v0.1 ===")
+          print(f"Schema: {schema_path}")
+          print(f"Sample: {sample_path}")
+
+          if not schema_path.exists():
+              print(f"ERROR: Schema file not found: {schema_path}")
+              sys.exit(1)
+
+          if not sample_path.exists():
+              print(f"ERROR: Sample file not found: {sample_path}")
+              sys.exit(1)
+
+          try:
+              schema = json.loads(schema_path.read_text(encoding="utf-8"))
+          except json.JSONDecodeError as e:
+              print(f"ERROR: Invalid JSON in schema: {e}")
+              sys.exit(1)
+
+          try:
+              sample = json.loads(sample_path.read_text(encoding="utf-8"))
+          except json.JSONDecodeError as e:
+              print(f"ERROR: Invalid JSON in sample: {e}")
+              sys.exit(1)
+
+          validator = Draft202012Validator(
+              schema,
+              format_checker=FormatChecker()
+          )
+
+          errors = sorted(
+              validator.iter_errors(sample),
+              key=lambda e: list(e.path)
+          )
+
+          if errors:
+              print("ERROR: Sample is invalid.")
+              for error in errors:
+                  path = ".".join(str(p) for p in error.path) or "<root>"
+                  print(f"- {path}: {error.message}")
+              sys.exit(1)
+
+          print("OK: trace-record.sample.json is valid.")
+          PY
