@@ -1,0 +1,362 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kazene.org/schemas/trace-record-v0.1.schema.json",
+  "title": "Kazene Trace Record v0.1",
+  "description": "A trace record for documenting structural fingerprints, provenance signals, and evidence metadata for AI-era creative works. This schema does not prove legal ownership or enforce royalties.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "trace_id",
+    "spec_version",
+    "source",
+    "fingerprint",
+    "trace_context",
+    "evidence",
+    "risk",
+    "status",
+    "created_at"
+  ],
+  "properties": {
+    "trace_id": {
+      "type": "string",
+      "description": "A unique identifier for this trace record.",
+      "pattern": "^trace_[a-zA-Z0-9._-]+$",
+      "examples": [
+        "trace_kazene_2026_001"
+      ]
+    },
+    "spec_version": {
+      "type": "string",
+      "description": "The version of the Trace Protocol used by this record.",
+      "const": "trace-protocol-v0.1"
+    },
+    "created_at": {
+      "type": "string",
+      "description": "The timestamp when this trace record was created.",
+      "format": "date-time"
+    },
+    "source": {
+      "type": "object",
+      "description": "Information about the original work or source being traced.",
+      "additionalProperties": false,
+      "required": [
+        "creator",
+        "work_title",
+        "canonical_url",
+        "published_at"
+      ],
+      "properties": {
+        "creator": {
+          "type": "string",
+          "description": "The creator, author, or entity associated with the source work.",
+          "minLength": 1
+        },
+        "creator_id": {
+          "type": "string",
+          "description": "Optional creator identifier, handle, DID, ORCID, GitHub account, or platform-specific ID."
+        },
+        "work_title": {
+          "type": "string",
+          "description": "The title of the source work.",
+          "minLength": 1
+        },
+        "canonical_url": {
+          "type": "string",
+          "description": "The canonical URL of the source work.",
+          "format": "uri"
+        },
+        "published_at": {
+          "type": "string",
+          "description": "The publication timestamp of the source work.",
+          "format": "date-time"
+        },
+        "platform": {
+          "type": "string",
+          "description": "The primary platform where the source work was published.",
+          "examples": [
+            "note",
+            "Medium",
+            "GitHub",
+            "Substack",
+            "X",
+            "Custom GPTs"
+          ]
+        },
+        "language": {
+          "type": "string",
+          "description": "The language of the source work, preferably as a BCP 47 language tag.",
+          "examples": [
+            "ja",
+            "en",
+            "ja-JP",
+            "en-US"
+          ]
+        }
+      }
+    },
+    "fingerprint": {
+      "type": "object",
+      "description": "Reference to the structural fingerprint associated with the source work.",
+      "additionalProperties": false,
+      "required": [
+        "fingerprint_id",
+        "method",
+        "hash",
+        "canonicalization"
+      ],
+      "properties": {
+        "fingerprint_id": {
+          "type": "string",
+          "description": "Identifier of the related Structure Fingerprint record.",
+          "pattern": "^sf_[a-zA-Z0-9._-]+$",
+          "examples": [
+            "sf_kazene_001"
+          ]
+        },
+        "method": {
+          "type": "string",
+          "description": "The method or specification used to generate the structural fingerprint.",
+          "examples": [
+            "structure-fingerprint-v0.1"
+          ]
+        },
+        "hash": {
+          "type": "string",
+          "description": "A cryptographic hash of the canonicalized structure or fingerprint object.",
+          "pattern": "^sha256-[a-fA-F0-9]{64}$",
+          "examples": [
+            "sha256-0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+          ]
+        },
+        "canonicalization": {
+          "type": "string",
+          "description": "The canonicalization method used before hashing or fingerprint generation.",
+          "examples": [
+            "text-normalized-v0.1",
+            "structure-canonical-v0.1"
+          ]
+        },
+        "fingerprint_uri": {
+          "type": "string",
+          "description": "Optional URI pointing to the full Structure Fingerprint record.",
+          "format": "uri"
+        }
+      }
+    },
+    "trace_context": {
+      "type": "object",
+      "description": "Contextual information about where and how the trace may be observed.",
+      "additionalProperties": false,
+      "required": [
+        "platforms",
+        "related_protocols"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "array",
+          "description": "Platforms where the work, its traces, or related implementations appear.",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "examples": [
+            [
+              "note",
+              "Medium",
+              "X",
+              "GitHub",
+              "Custom GPTs"
+            ]
+          ]
+        },
+        "related_protocols": {
+          "type": "array",
+          "description": "Related protocols, specifications, or systems that may consume or refer to this trace record.",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true,
+          "examples": [
+            [
+              "Structure Fingerprint",
+              "Lineage Relation",
+              "Allocation Readiness",
+              "Kazene Royalty OS",
+              "RSL"
+            ]
+          ]
+        },
+        "implementation_refs": {
+          "type": "array",
+          "description": "Optional references to implementations, repositories, Custom GPTs, or prototype systems related to this trace.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "label",
+              "uri"
+            ],
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "uri": {
+                "type": "string",
+                "format": "uri"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "repository",
+                  "article",
+                  "custom_gpt",
+                  "schema",
+                  "dataset",
+                  "other"
+                ]
+              }
+            }
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "description": "Evidence signals associated with this trace record. These signals support later review but do not constitute legal proof by themselves.",
+      "additionalProperties": false,
+      "required": [
+        "timestamp_evidence",
+        "url_evidence",
+        "signature_evidence",
+        "repository_evidence"
+      ],
+      "properties": {
+        "timestamp_evidence": {
+          "type": "boolean",
+          "description": "Whether publication or creation timestamp evidence exists."
+        },
+        "url_evidence": {
+          "type": "boolean",
+          "description": "Whether URL-based evidence exists."
+        },
+        "signature_evidence": {
+          "type": "boolean",
+          "description": "Whether cryptographic signature evidence exists."
+        },
+        "repository_evidence": {
+          "type": "boolean",
+          "description": "Whether repository-based evidence exists, such as Git commits, releases, or tagged files."
+        },
+        "evidence_refs": {
+          "type": "array",
+          "description": "Optional references to evidence materials.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "type",
+              "uri"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "timestamp",
+                  "url",
+                  "signature",
+                  "repository",
+                  "archive",
+                  "manifest",
+                  "other"
+                ]
+              },
+              "uri": {
+                "type": "string",
+                "format": "uri"
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "risk": {
+      "type": "object",
+      "description": "Risk and ambiguity information. This section prevents overclaiming and clarifies that the trace record is evidence, not a final judgment.",
+      "additionalProperties": false,
+      "required": [
+        "origin_claim_strength",
+        "ambiguity_level",
+        "overclaim_risk"
+      ],
+      "properties": {
+        "origin_claim_strength": {
+          "type": "string",
+          "description": "The strength of the origin-related claim represented by this trace record.",
+          "enum": [
+            "weak",
+            "moderate",
+            "strong",
+            "unverified"
+          ]
+        },
+        "ambiguity_level": {
+          "type": "string",
+          "description": "The level of ambiguity surrounding the trace relationship.",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "overclaim_risk": {
+          "type": "string",
+          "description": "Risk that this record may be misread as legal proof, ownership enforcement, or automatic royalty entitlement.",
+          "enum": [
+            "low",
+            "controlled",
+            "high"
+          ]
+        },
+        "notes": {
+          "type": "string",
+          "description": "Optional human-readable notes explaining uncertainty, limitations, or review needs."
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "description": "The lifecycle status of this trace record.",
+      "enum": [
+        "draft",
+        "recorded",
+        "superseded",
+        "revoked",
+        "archived"
+      ]
+    },
+    "supersedes": {
+      "type": "string",
+      "description": "Optional trace_id of a previous trace record superseded by this one.",
+      "pattern": "^trace_[a-zA-Z0-9._-]+$"
+    },
+    "license": {
+      "type": "string",
+      "description": "Optional license or usage note for the trace record itself.",
+      "examples": [
+        "CC-BY-4.0",
+        "CC0-1.0",
+        "MIT"
+      ]
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional general notes."
+    }
+  }
+}
