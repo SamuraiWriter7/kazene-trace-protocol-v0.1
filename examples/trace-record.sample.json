@@ -1,0 +1,76 @@
+{
+  "trace_id": "trace_kazene_2026_001",
+  "spec_version": "trace-protocol-v0.1",
+  "created_at": "2026-05-17T00:00:00Z",
+  "source": {
+    "creator": "Shidenkai Alpha",
+    "creator_id": "@siba834",
+    "work_title": "Kazene Trace Protocol v0.1",
+    "canonical_url": "https://github.com/SamuraiWriter7/kazene-trace-protocol-v0.1",
+    "published_at": "2026-05-17T00:00:00Z",
+    "platform": "GitHub",
+    "language": "en"
+  },
+  "fingerprint": {
+    "fingerprint_id": "sf_kazene_trace_protocol_001",
+    "method": "structure-fingerprint-v0.1",
+    "hash": "sha256-0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+    "canonicalization": "structure-canonical-v0.1",
+    "fingerprint_uri": "https://github.com/SamuraiWriter7/kazene-trace-protocol-v0.1/blob/main/examples/structure-fingerprint.sample.json"
+  },
+  "trace_context": {
+    "platforms": [
+      "GitHub",
+      "note",
+      "Medium",
+      "X",
+      "Custom GPTs"
+    ],
+    "related_protocols": [
+      "Structure Fingerprint",
+      "Lineage Relation",
+      "Allocation Readiness",
+      "Kazene Royalty OS",
+      "RSL"
+    ],
+    "implementation_refs": [
+      {
+        "label": "Kazene Trace Protocol Repository",
+        "uri": "https://github.com/SamuraiWriter7/kazene-trace-protocol-v0.1",
+        "type": "repository"
+      },
+      {
+        "label": "Trace Record JSON Schema",
+        "uri": "https://github.com/SamuraiWriter7/kazene-trace-protocol-v0.1/blob/main/schemas/trace-record-v0.1.schema.json",
+        "type": "schema"
+      }
+    ]
+  },
+  "evidence": {
+    "timestamp_evidence": true,
+    "url_evidence": true,
+    "signature_evidence": false,
+    "repository_evidence": true,
+    "evidence_refs": [
+      {
+        "type": "repository",
+        "uri": "https://github.com/SamuraiWriter7/kazene-trace-protocol-v0.1",
+        "description": "Repository containing the Trace Protocol schema, examples, and validation workflow."
+      },
+      {
+        "type": "url",
+        "uri": "https://github.com/SamuraiWriter7/kazene-trace-protocol-v0.1/blob/main/examples/trace-record.sample.json",
+        "description": "Public sample trace record for Trace Protocol v0.1."
+      }
+    ]
+  },
+  "risk": {
+    "origin_claim_strength": "moderate",
+    "ambiguity_level": "medium",
+    "overclaim_risk": "controlled",
+    "notes": "This trace record documents structural provenance signals. It does not prove legal ownership, enforce royalties, or make a final origin judgment."
+  },
+  "status": "recorded",
+  "license": "CC-BY-4.0",
+  "notes": "This sample demonstrates the minimum practical structure of a Trace Protocol v0.1 record. It is intended to support later comparison, lineage review, allocation readiness, and royalty-related systems without performing those functions directly."
+}
