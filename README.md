@@ -105,6 +105,9 @@ The `risk` section clarifies that a trace record may support later review, but i
 ```text
 .
 ├── README.md
+├── LICENSE
+├── CITATION.cff
+├── CHANGELOG.md
 ├── schemas/
 │   └── trace-record-v0.1.schema.json
 ├── examples/
@@ -153,6 +156,15 @@ If you are new to this repository, read the files in this order:
 9. `.github/workflows/validate-specs.yml`  
    GitHub Actions workflow for validating the schema and sample.
 
+10. `LICENSE`  
+    Repository license.
+
+11. `CITATION.cff`  
+    Citation metadata for referencing this specification.
+
+12. `CHANGELOG.md`  
+    Version history and release notes.
+
 ---
 
 ## Documentation Map
@@ -164,6 +176,8 @@ If you are new to this repository, read the files in this order:
 | `docs/relationship-to-royalty-os.md` | Defines the boundary between trace evidence and value circulation |
 | `docs/rsl-bridge-notes.md` | Explains future bridge patterns with external licensing frameworks |
 | `docs/c2pa-inspired-provenance-notes.md` | Explains the provenance-inspired philosophy of the protocol |
+| `CITATION.cff` | Provides citation metadata for academic, technical, or public reference |
+| `CHANGELOG.md` | Records changes across versions |
 
 These documents are not separate subsystems.
 
@@ -507,6 +521,12 @@ Current version:
 trace-protocol-v0.1
 ```
 
+Release:
+
+```text
+v0.1.0
+```
+
 Schema:
 
 ```text
@@ -517,6 +537,28 @@ Sample:
 
 ```text
 examples/trace-record.sample.json
+```
+
+Changelog:
+
+```text
+CHANGELOG.md
+```
+
+---
+
+## Citation
+
+If you use or reference this specification, please cite it using the metadata in:
+
+```text
+CITATION.cff
+```
+
+Suggested citation label:
+
+```text
+Shidenkai Alpha. Kazene Trace Protocol v0.1. 2026.
 ```
 
 ---
@@ -547,19 +589,15 @@ digital-provenance
 
 ## License
 
-The sample record may use:
+This repository is released under the MIT License.
+
+See:
 
 ```text
-CC-BY-4.0
+LICENSE
 ```
 
-Repository code and validation scripts may use a software license such as:
-
-```text
-MIT
-```
-
-Choose the final repository license according to your intended publication and reuse policy.
+Individual examples, documents, or referenced creative works may carry their own usage notes where explicitly stated.
 
 ---
 
